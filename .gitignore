@@ -1,6 +1,5 @@
 # Ignore build output and binaries
 *.exe
-*.bin
 *.obj
 *.o
 *.dll
