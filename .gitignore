@@ -1,0 +1,29 @@
+# Ignore build output and binaries
+*.exe
+*.bin
+*.obj
+*.o
+*.dll
+*.log
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore OS files
+Thumbs.db
+.DS_Store
+
+# Ignore backup files
+*.bak
+*.tmp
+~$*
+
+# Ignore other temp files
+*.user
+*.suo
+*.pch
+*.idb
+*.class
+*.pyc
+*.pyo
+*.pyd

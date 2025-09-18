@@ -1,13 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <cstring>
 #include <string>
 #include "menu.h"
 using namespace std;
 
-void Menu() {
-    cout << "\tChuong Trinh Quan Ly Thu Vien" << endl;
-    cout << "\t\t(Nhom 2 - De 1)" << endl;
+void Menu()
+{
+    cout << "\tChuong Trinh Quan Ly Thu Vien (Version 2.0 - 2020-2025)" << endl;
     cout << endl;
     cout << "1. Nhap them mot cuon sach" << endl;
     cout << "2. Sua thong tin sach" << endl;
@@ -22,14 +23,19 @@ void Menu() {
     cout << "11. Liet ke nhung sach duoc muon cua mot sinh vien" << endl;
     cout << "12. Liet ke toan bo sach duoc muon trong thu vien" << endl;
     cout << "13. Thoat khoi he thong" << endl;
+    cout << endl;
+    cout << setw(60) << right << "Developed by Anh Duc Le" << endl;
+    cout << endl;
     cout << "=> Moi chon chuc nang: ";
 }
 
-void ThemSach() {
+void ThemSach()
+{
     cout << "\t\tNhap them mot cuon sach" << endl;
     cout << endl;
     char MS[10], Ten[100], Loai[100], TG[100];
-    int NXB;;
+    int NXB;
+    ;
     cin.ignore();
     cout << "- Nhap ma sach: ";
     cin.getline(MS, 10);
@@ -45,12 +51,13 @@ void ThemSach() {
     New.setSach(MS, Ten, Loai, TG, NXB);
     cout << endl;
     cout << "\t\tThem sach thanh cong ^^" << endl;
-    ofstream saveSach("sach.bin", ios :: binary | ios :: app);
-    saveSach.write((char*)(&New), sizeof(Sach));
+    ofstream saveSach("sach.bin", ios ::binary | ios ::app);
+    saveSach.write((char *)(&New), sizeof(Sach));
     saveSach.close();
 }
 
-void SuaSach() {
+void SuaSach()
+{
     // Tìm và sửa theo mã sách
     cout << "\t\tSua thong tin sach" << endl;
     cout << endl;
@@ -61,19 +68,24 @@ void SuaSach() {
     cin.ignore();
     cout << "Nhap ma sach can sua: ";
     getline(cin, Find);
-    ifstream readSach("sach.bin", ios :: binary);
-    ofstream changeSach("changesach.bin", ios :: binary);
-    if(!readSach) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+    ifstream readSach("sach.bin", ios ::binary);
+    ofstream changeSach("changesach.bin", ios ::binary);
+    if (!readSach)
+    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
+    else
+    {
         bool check = false;
-        while(!readSach.eof()) {// Đọc từ đầu đến cuối file
+        while (!readSach.eof())
+        { // Đọc từ đầu đến cuối file
             readSach.read((char *)(&change), sizeof(Sach));
-            if(readSach.good()) {
-                if(Find == change.getMaSach()) {
-                    strcpy(newMa, Find.c_str());// Convert string sang char và copy vào newMa
+            if (readSach.good())
+            {
+                if (Find == change.getMaSach())
+                {
+                    strcpy(newMa, Find.c_str()); // Convert string sang char và copy vào newMa
                     change.setMaSach(newMa);
                     cout << "- Nhap ten sach moi: ";
                     cin.getline(newTen, 100);
@@ -91,10 +103,11 @@ void SuaSach() {
                     cout << "\t\tSua thong tin sach thanh cong ^^" << endl;
                     check = true;
                 }
-                changeSach.write((char*)(&change), sizeof(Sach));
+                changeSach.write((char *)(&change), sizeof(Sach));
             }
         }
-        if(check == false) {
+        if (check == false)
+        {
             cout << endl;
             cout << "\t\tMa sach vua nhap khong ton tai. Vui long thu lai !" << endl;
         }
@@ -102,19 +115,22 @@ void SuaSach() {
     changeSach.close();
     readSach.close();
     // Sao chép data từ file changesach.bin vào file sach.bin
-    ofstream save_readSach("sach.bin", ios :: binary);
-    ifstream read_changeSach("changesach.bin", ios :: binary);
-    while(!read_changeSach.eof()) {
-        read_changeSach.read((char*)(&change), sizeof(Sach));
-        if(read_changeSach.good()) {
-            save_readSach.write((char*)(&change), sizeof(Sach));
+    ofstream save_readSach("sach.bin", ios ::binary);
+    ifstream read_changeSach("changesach.bin", ios ::binary);
+    while (!read_changeSach.eof())
+    {
+        read_changeSach.read((char *)(&change), sizeof(Sach));
+        if (read_changeSach.good())
+        {
+            save_readSach.write((char *)(&change), sizeof(Sach));
         }
     }
     read_changeSach.close();
     save_readSach.close();
 }
 
-void XoaSach() {
+void XoaSach()
+{
     // Tìm và xoá theo mã sách, không xoá được nếu sinh viên đang mượn cuốn sách này
     cout << "\t\tXoa mot cuon sach" << endl;
     cout << endl;
@@ -124,49 +140,62 @@ void XoaSach() {
     cin.ignore();
     cout << "- Nhap ma sach can xoa: ";
     getline(cin, Find);
-    ifstream readSach("sach.bin", ios :: binary);
-    ifstream readMuon("muontra.bin", ios :: binary);
-    ofstream deleteSach("deletesach.bin", ios :: binary);
-    if(!readMuon) {
+    ifstream readSach("sach.bin", ios ::binary);
+    ifstream readMuon("muontra.bin", ios ::binary);
+    ofstream deleteSach("deletesach.bin", ios ::binary);
+    if (!readMuon)
+    {
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
+    else
+    {
         bool check_1 = false;
-        while(!readMuon.eof()) {
+        while (!readMuon.eof())
+        {
             readMuon.read((char *)(&Muon), sizeof(MuonTra));
-            if(Find == Muon.getMaSach()) {
+            if (Find == Muon.getMaSach())
+            {
                 check_1 = true;
             }
         }
-        if(check_1 == false) {
-            if(!readSach) {
+        if (check_1 == false)
+        {
+            if (!readSach)
+            {
                 cout << endl;
                 cout << "\t\tLoi doc du lieu !" << endl;
             }
-            else {
+            else
+            {
                 bool check_2 = false;
-                while(!readSach.eof()) {
+                while (!readSach.eof())
+                {
                     readSach.read((char *)(&Delete), sizeof(Sach));
-                    if(Find == Delete.getMaSach()) {
+                    if (Find == Delete.getMaSach())
+                    {
                         readSach.read((char *)(&Delete), sizeof(Sach));
                         check_2 = true;
                     }
-                    if(readSach.good()) {
+                    if (readSach.good())
+                    {
                         deleteSach.write((char *)(&Delete), sizeof(Sach));
                     }
                 }
-                if(check_2 == false) {
+                if (check_2 == false)
+                {
                     cout << endl;
                     cout << "\t\tMa sach khong ton tai. Vui long thu lai!" << endl;
                 }
-                else {
+                else
+                {
                     cout << endl;
                     cout << "\t\tXoa thanh cong!" << endl;
                 }
             }
         }
-        else {
+        else
+        {
             cout << endl;
             cout << "\t\tSach nay dang duoc muon. Khong the xoa, vui long thu lai!" << endl;
             return;
@@ -176,11 +205,13 @@ void XoaSach() {
     readMuon.close();
     readSach.close();
     // Sao chép dữ liệu từ file deletesach.bin sang file sach.bin
-    ofstream save_readSach("sach.bin", ios :: binary);
-    ifstream read_deleteSach("deletesach.bin", ios :: binary);
-    while(!read_deleteSach.eof()) {
+    ofstream save_readSach("sach.bin", ios ::binary);
+    ifstream read_deleteSach("deletesach.bin", ios ::binary);
+    while (!read_deleteSach.eof())
+    {
         read_deleteSach.read((char *)(&Delete), sizeof(Sach));
-        if(read_deleteSach.good()) {
+        if (read_deleteSach.good())
+        {
             save_readSach.write((char *)(&Delete), sizeof(Sach));
         }
     }
@@ -188,7 +219,8 @@ void XoaSach() {
     save_readSach.close();
 }
 
-void ThemSinhVien() {
+void ThemSinhVien()
+{
     cout << "\t\tNhap thong tin sinh vien" << endl;
     cout << endl;
     char msv[10], hoten[100], nganhhoc[100];
@@ -203,12 +235,13 @@ void ThemSinhVien() {
     New.setSinhVien(msv, hoten, nganhhoc);
     cout << endl;
     cout << "\t\tThem sinh vien thanh cong ^^" << endl;
-    ofstream saveSinhVien("sinhvien.bin", ios :: binary | ios :: app);
-    saveSinhVien.write((char*)(&New), sizeof(SinhVien));
+    ofstream saveSinhVien("sinhvien.bin", ios ::binary | ios ::app);
+    saveSinhVien.write((char *)(&New), sizeof(SinhVien));
     saveSinhVien.close();
 }
 
-void SuaSinhVien() {
+void SuaSinhVien()
+{
     // Tìm và sửa theo mã sinh viên
     cout << "\t\tSua thong tin sinh vien" << endl;
     cout << endl;
@@ -218,19 +251,24 @@ void SuaSinhVien() {
     cin.ignore();
     cout << "Nhap ma sinh vien can sua: ";
     getline(cin, Find);
-    ifstream readSinhVien("sinhvien.bin", ios :: binary);
-    ofstream changeSinhVien("changesinhvien.bin", ios :: binary);
-    if(!readSinhVien) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+    ifstream readSinhVien("sinhvien.bin", ios ::binary);
+    ofstream changeSinhVien("changesinhvien.bin", ios ::binary);
+    if (!readSinhVien)
+    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
+    else
+    {
         bool check = false;
-        while(!readSinhVien.eof()) {// Đọc từ đầu đến cuối file
+        while (!readSinhVien.eof())
+        { // Đọc từ đầu đến cuối file
             readSinhVien.read((char *)(&change), sizeof(SinhVien));
-            if(readSinhVien.good()) {
-                if(Find == change.getMSV()) {
-                    strcpy(newMSV, Find.c_str());// Convert string sang char và copy vào newMSV
+            if (readSinhVien.good())
+            {
+                if (Find == change.getMSV())
+                {
+                    strcpy(newMSV, Find.c_str()); // Convert string sang char và copy vào newMSV
                     change.setMSV(newMSV);
                     cout << "- Nhap ho va ten moi: ";
                     cin.getline(newHoTen, 100);
@@ -242,10 +280,11 @@ void SuaSinhVien() {
                     cout << "\t\tSua thong tin sinh vien thanh cong ^^" << endl;
                     check = true;
                 }
-                changeSinhVien.write((char*)(&change), sizeof(SinhVien));
+                changeSinhVien.write((char *)(&change), sizeof(SinhVien));
             }
         }
-        if(check == false) {
+        if (check == false)
+        {
             cout << endl;
             cout << "\t\tMa sinh vien vua nhap khong ton tai. Vui long thu lai !" << endl;
         }
@@ -253,19 +292,22 @@ void SuaSinhVien() {
     changeSinhVien.close();
     readSinhVien.close();
     // Sao chép data từ file changesinhvien.bin vào file sinhvien.bin
-    ofstream save_readSinhVien("sinhvien.bin", ios :: binary);
-    ifstream read_changeSinhVien("changesinhvien.bin", ios :: binary);
-    while(!read_changeSinhVien.eof()) {
-        read_changeSinhVien.read((char*)(&change), sizeof(SinhVien));
-        if(read_changeSinhVien.good()) {
-            save_readSinhVien.write((char*)(&change), sizeof(SinhVien));
+    ofstream save_readSinhVien("sinhvien.bin", ios ::binary);
+    ifstream read_changeSinhVien("changesinhvien.bin", ios ::binary);
+    while (!read_changeSinhVien.eof())
+    {
+        read_changeSinhVien.read((char *)(&change), sizeof(SinhVien));
+        if (read_changeSinhVien.good())
+        {
+            save_readSinhVien.write((char *)(&change), sizeof(SinhVien));
         }
     }
     read_changeSinhVien.close();
     save_readSinhVien.close();
 }
 
-void XoaSinhVien() {
+void XoaSinhVien()
+{
     cout << "\t\tXoa thong tin sinh vien" << endl;
     cout << endl;
     string Find;
@@ -274,49 +316,62 @@ void XoaSinhVien() {
     cin.ignore();
     cout << "- Nhap ma sinh vien can xoa: ";
     getline(cin, Find);
-    ifstream readSinhVien("sinhvien.bin", ios :: binary);
-    ifstream readMuon("muontra.bin", ios :: binary);
-    ofstream deleteSinhVien("deletesinhvien.bin", ios :: binary);
-    if(!readMuon) {
+    ifstream readSinhVien("sinhvien.bin", ios ::binary);
+    ifstream readMuon("muontra.bin", ios ::binary);
+    ofstream deleteSinhVien("deletesinhvien.bin", ios ::binary);
+    if (!readMuon)
+    {
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
+    else
+    {
         bool check_1 = false;
-        while(!readMuon.eof()) {
+        while (!readMuon.eof())
+        {
             readMuon.read((char *)(&Muon), sizeof(MuonTra));
-            if(Find == Muon.getMSV()) {
+            if (Find == Muon.getMSV())
+            {
                 check_1 = true;
             }
         }
-        if(check_1 == false) {
-            if(!readSinhVien) {
+        if (check_1 == false)
+        {
+            if (!readSinhVien)
+            {
                 cout << endl;
                 cout << "\t\tLoi doc du lieu !" << endl;
             }
-            else {
+            else
+            {
                 bool check_2 = false;
-                while(!readSinhVien.eof()) {
+                while (!readSinhVien.eof())
+                {
                     readSinhVien.read((char *)(&Delete), sizeof(SinhVien));
-                    if(Find == Delete.getMSV()) {
+                    if (Find == Delete.getMSV())
+                    {
                         readSinhVien.read((char *)(&Delete), sizeof(SinhVien));
                         check_2 = true;
                     }
-                    if(readSinhVien.good()) {
+                    if (readSinhVien.good())
+                    {
                         deleteSinhVien.write((char *)(&Delete), sizeof(SinhVien));
                     }
                 }
-                if(check_2 == false) {
+                if (check_2 == false)
+                {
                     cout << endl;
                     cout << "\t\tMa sinh vien khong ton tai. Vui long thu lai!" << endl;
                 }
-                else {
+                else
+                {
                     cout << endl;
                     cout << "\t\tXoa thanh cong!" << endl;
                 }
             }
         }
-        else {
+        else
+        {
             cout << endl;
             cout << "\t\tSinh vien nay dang muon sach. Khong the xoa, vui long thu lai!" << endl;
             return;
@@ -326,11 +381,13 @@ void XoaSinhVien() {
     readMuon.close();
     readSinhVien.close();
     // Sao chép dữ liệu từ file deletesach.bin sang file sach.bin
-    ofstream save_readSinhVien("sinhvien.bin", ios :: binary);
-    ifstream read_deleteSinhVien("deletesinhvien.bin", ios :: binary);
-    while(!read_deleteSinhVien.eof()) {
+    ofstream save_readSinhVien("sinhvien.bin", ios ::binary);
+    ifstream read_deleteSinhVien("deletesinhvien.bin", ios ::binary);
+    while (!read_deleteSinhVien.eof())
+    {
         read_deleteSinhVien.read((char *)(&Delete), sizeof(SinhVien));
-        if(read_deleteSinhVien.good()) {
+        if (read_deleteSinhVien.good())
+        {
             save_readSinhVien.write((char *)(&Delete), sizeof(SinhVien));
         }
     }
@@ -338,7 +395,8 @@ void XoaSinhVien() {
     save_readSinhVien.close();
 }
 
-void MuonSach() {
+void MuonSach()
+{
     // Quản lý theo mã sinh viên và mã sách
     cin.ignore();
     cout << "\t\tMuon sach" << endl;
@@ -347,69 +405,84 @@ void MuonSach() {
     char msv[10], ms[10];
     cout << "- Nhap ma sinh vien: ";
     getline(cin, MSV);
-    strcpy(msv, MSV.c_str());// Convert string sang char và copy vào mảng msv
+    strcpy(msv, MSV.c_str()); // Convert string sang char và copy vào mảng msv
     cout << "- Nhap ma sach: ";
     getline(cin, MS);
-    strcpy(ms, MS.c_str());// Convert string sang char và copy vào mảng ms
+    strcpy(ms, MS.c_str()); // Convert string sang char và copy vào mảng ms
     MuonTra Muon;
     Sach sach;
     SinhVien sinhvien;
     Muon.setMuon(msv, ms);
     bool check_1 = false, check_2 = false;
-    ifstream readSinhVien("sinhvien.bin", ios :: binary);
-    if(!readSinhVien) {
+    ifstream readSinhVien("sinhvien.bin", ios ::binary);
+    if (!readSinhVien)
+    {
         cout << endl;
         cout << "\t\tLoi doc du lieu" << endl;
     }
-    else {
-        while(!readSinhVien.eof()) {
+    else
+    {
+        while (!readSinhVien.eof())
+        {
             readSinhVien.read((char *)(&sinhvien), sizeof(SinhVien));
-            if(readSinhVien.good()) {
-                if(MSV == sinhvien.getMSV()){
+            if (readSinhVien.good())
+            {
+                if (MSV == sinhvien.getMSV())
+                {
                     check_1 = true;
                 }
             }
         }
     }
     readSinhVien.close();
-    ifstream readSach("sach.bin", ios :: binary);
-    if(!readSach) {
+    ifstream readSach("sach.bin", ios ::binary);
+    if (!readSach)
+    {
         cout << endl;
         cout << "\t\tLoi doc du lieu" << endl;
     }
-    else {
-        while(!readSach.eof()) {
+    else
+    {
+        while (!readSach.eof())
+        {
             readSach.read((char *)(&sach), sizeof(Sach));
-            if(readSach.good()) {
-                if(MS == sach.getMaSach()) {
+            if (readSach.good())
+            {
+                if (MS == sach.getMaSach())
+                {
                     check_2 = true;
                 }
             }
         }
     }
     readSach.close();
-    if(check_1 == true && check_2 == true) {
-        ofstream saveMuon("muontra.bin", ios :: binary | ios :: app);
-        saveMuon.write((char*)(&Muon), sizeof(MuonTra));
+    if (check_1 == true && check_2 == true)
+    {
+        ofstream saveMuon("muontra.bin", ios ::binary | ios ::app);
+        saveMuon.write((char *)(&Muon), sizeof(MuonTra));
         saveMuon.close();
         cout << endl;
         cout << "\t\tMuon sach thanh cong!" << endl;
     }
-    else if(check_1 == true && check_2 != true) {
+    else if (check_1 == true && check_2 != true)
+    {
         cout << endl;
         cout << "\t\tMa sach khong ton tai. Vui long thu lai!" << endl;
     }
-    else if(check_1 != true && check_2 == true) {
+    else if (check_1 != true && check_2 == true)
+    {
         cout << endl;
         cout << "\t\tMa sinh vien khong ton tai. Vui long thu lai!" << endl;
     }
-    else {
+    else
+    {
         cout << endl;
         cout << "\t\tMa sach va ma sinh vien khong ton tai. Vui long thu lai!" << endl;
     }
 }
 
-void TraSach() {
+void TraSach()
+{
     cin.ignore();
     cout << "\t\tTra sach" << endl;
     cout << endl;
@@ -419,27 +492,33 @@ void TraSach() {
     getline(cin, msv);
     cout << "- Nhap ma sach: ";
     getline(cin, ms);
-    ifstream readMuon("muontra.bin", ios :: binary);
-    ofstream deleteMuon("deletemuon.bin", ios :: binary);
-    if(!readMuon) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+    ifstream readMuon("muontra.bin", ios ::binary);
+    ofstream deleteMuon("deletemuon.bin", ios ::binary);
+    if (!readMuon)
+    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
+    else
+    {
         bool check = false;
-        while(!readMuon.eof()) {// Đọc từ đầu đến cuối file
+        while (!readMuon.eof())
+        { // Đọc từ đầu đến cuối file
             readMuon.read((char *)(&Tra), sizeof(MuonTra));
-            if(msv == Tra.getMSV() && ms == Tra.getMaSach()) {
+            if (msv == Tra.getMSV() && ms == Tra.getMaSach())
+            {
                 readMuon.read((char *)(&Tra), sizeof(MuonTra));
                 cout << endl;
                 cout << "\t\tTra sach thanh cong!" << endl;
                 check = true;
             }
-            if(readMuon.good()) {
+            if (readMuon.good())
+            {
                 deleteMuon.write((char *)(&Tra), sizeof(MuonTra));
             }
         }
-        if (check == false) {
+        if (check == false)
+        {
             cout << endl;
             cout << "\t\tMa sinh vien hoac ma sach khong dung :( Vui long thu lai!" << endl;
         }
@@ -447,11 +526,13 @@ void TraSach() {
     deleteMuon.close();
     readMuon.close();
     // Sao chép dữ liệu từ file deletemuon.bin sang file muontra.bin
-    ofstream save_readMuon("muontra.bin", ios :: binary);
-    ifstream read_deleteMuon("deletemuon.bin", ios :: binary);
-    while(!read_deleteMuon.eof()) {
+    ofstream save_readMuon("muontra.bin", ios ::binary);
+    ifstream read_deleteMuon("deletemuon.bin", ios ::binary);
+    while (!read_deleteMuon.eof())
+    {
         read_deleteMuon.read((char *)(&Tra), sizeof(MuonTra));
-        if(read_deleteMuon.good()) {
+        if (read_deleteMuon.good())
+        {
             save_readMuon.write((char *)(&Tra), sizeof(MuonTra));
         }
     }
@@ -459,22 +540,27 @@ void TraSach() {
     save_readMuon.close();
 }
 
-void ToanBoSach() {
+void ToanBoSach()
+{
     cout << "\t\tLiet ke toan bo sach trong thu vien" << endl;
     cout << endl;
     cout << "STT\tMa sach\t\tTen sach\t\tThe loai\t\tTac gia\t\t\tNam xuat ban\n";
     cout << endl;
     int stt = 0;
     Sach old;
-    ifstream printSach("sach.bin", ios :: binary);
-    if(!printSach) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+    ifstream printSach("sach.bin", ios ::binary);
+    if (!printSach)
+    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
-        while(!printSach.eof()) {// Đọc từ đầu đến cuối file (Chưa đọc đến cuối file thì tiếp tục đọc)
+    else
+    {
+        while (!printSach.eof())
+        { // Đọc từ đầu đến cuối file (Chưa đọc đến cuối file thì tiếp tục đọc)
             printSach.read((char *)(&old), sizeof(Sach));
-            if(printSach.good()) {// Nếu đọc file không gặp lỗi gì cả thì in ra màn hình
+            if (printSach.good())
+            { // Nếu đọc file không gặp lỗi gì cả thì in ra màn hình
                 cout << stt + 1 << "\t";
                 cout << old.getMaSach() << "\t\t";
                 cout << old.getTenSach() << "\t\t";
@@ -488,22 +574,27 @@ void ToanBoSach() {
     printSach.close();
 }
 
-void ToanBoSinhVien() {
+void ToanBoSinhVien()
+{
     cout << "\t\tLiet ke toan bo sinh vien" << endl;
     cout << endl;
     cout << "STT\tMSV\t\tHo va ten\t\tNganh hoc\n";
     cout << endl;
     int stt = 0;
     SinhVien old;
-    ifstream printSinhVien("sinhvien.bin", ios :: binary);
-    if(!printSinhVien) {
+    ifstream printSinhVien("sinhvien.bin", ios ::binary);
+    if (!printSinhVien)
+    {
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
-        while(!printSinhVien.eof()) {
+    else
+    {
+        while (!printSinhVien.eof())
+        {
             printSinhVien.read((char *)(&old), sizeof(SinhVien));
-            if(printSinhVien.good()) {
+            if (printSinhVien.good())
+            {
                 cout << stt + 1 << "\t";
                 cout << old.getMSV() << "\t\t";
                 cout << old.getHoTen() << "\t\t";
@@ -515,7 +606,8 @@ void ToanBoSinhVien() {
     printSinhVien.close();
 }
 
-void SachMotSinhVienMuon() {
+void SachMotSinhVienMuon()
+{
     cin.ignore();
     cout << "\t\tLiet ke nhung sach duoc muon cua mot sinh vien" << endl;
     cout << endl;
@@ -526,31 +618,41 @@ void SachMotSinhVienMuon() {
     cout << endl;
     cout << "STT\tMa sach\t\tTen sach\t\tThe loai\t\tTac gia\t\t\tNam xuat ban" << endl;
     cout << endl;
-    ifstream readMuon("muontra.bin", ios :: binary);
+    ifstream readMuon("muontra.bin", ios ::binary);
     MuonTra printMuon;
     Sach Muon;
-    if(!readMuon) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+    if (!readMuon)
+    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
+    else
+    {
         bool check = false;
-        while(!readMuon.eof()) {// Đọc từ đầu đến cuối file
+        while (!readMuon.eof())
+        { // Đọc từ đầu đến cuối file
             readMuon.read((char *)(&printMuon), sizeof(MuonTra));
-            if(readMuon.good()) {
-                if(Find == printMuon.getMSV()) {
+            if (readMuon.good())
+            {
+                if (Find == printMuon.getMSV())
+                {
                     cout << stt + 1 << "\t";
                     cout << printMuon.getMaSach() << "\t\t";
-                    ifstream readSach("sach.bin", ios :: binary);
-                    if(!readSach) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+                    ifstream readSach("sach.bin", ios ::binary);
+                    if (!readSach)
+                    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
                         cout << endl;
                         cout << "\t\tLoi doc du lieu !" << endl;
                     }
-                    else {
-                        while(!readSach.eof()) {
+                    else
+                    {
+                        while (!readSach.eof())
+                        {
                             readSach.read((char *)(&Muon), sizeof(Sach));
-                            if(readSach.good()) {
-                                if(printMuon.getMaSach() == Muon.getMaSach()) {
+                            if (readSach.good())
+                            {
+                                if (printMuon.getMaSach() == Muon.getMaSach())
+                                {
                                     cout << Muon.getTenSach() << "\t\t";
                                     cout << Muon.getTheLoai() << "\t\t";
                                     cout << Muon.getTacGia() << "\t\t";
@@ -565,7 +667,8 @@ void SachMotSinhVienMuon() {
                 }
             }
         }
-        if (check == false) {
+        if (check == false)
+        {
             cout << endl;
             cout << "\t\tMa sinh vien khong ton tai :( Vui long thu lai!" << endl;
         }
@@ -573,54 +676,69 @@ void SachMotSinhVienMuon() {
     readMuon.close();
 }
 
-void ToanBoSachDuocMuon() {
+void ToanBoSachDuocMuon()
+{
     cout << "\t\tLiet ke toan bo sach duoc muon trong thu vien" << endl;
     cout << endl;
     cout << "STT\tMSV\t\tHo va ten\t\tMa sach\t\tTen sach\t\tThe loai\t\tTac gia\t\t\tNam xuat ban" << endl;
     cout << endl;
     int stt = 0;
-    ifstream readMuon("muontra.bin", ios :: binary);
+    ifstream readMuon("muontra.bin", ios ::binary);
     SinhVien printSinhVien;
     MuonTra printMuon;
     Sach printSach;
-    if(!readMuon) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+    if (!readMuon)
+    { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
         cout << endl;
         cout << "\t\tLoi doc du lieu !" << endl;
     }
-    else {
-        while(!readMuon.eof()) {// Đọc từ đầu đến cuối file
+    else
+    {
+        while (!readMuon.eof())
+        { // Đọc từ đầu đến cuối file
             readMuon.read((char *)(&printMuon), sizeof(MuonTra));
-            if(readMuon.good()) {
+            if (readMuon.good())
+            {
                 cout << stt + 1 << "\t";
                 cout << printMuon.getMSV() << "\t\t";
-                //Đọc dữ liệu từ file sinhvien.bin
-                ifstream readSinhVien("sinhvien.bin", ios :: binary);
-                if(!readSinhVien) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+                // Đọc dữ liệu từ file sinhvien.bin
+                ifstream readSinhVien("sinhvien.bin", ios ::binary);
+                if (!readSinhVien)
+                { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
                     cout << endl;
                     cout << "\t\tLoi doc du lieu !" << endl;
                 }
-                else {
-                    while(!readSinhVien.eof()) {
+                else
+                {
+                    while (!readSinhVien.eof())
+                    {
                         readSinhVien.read((char *)(&printSinhVien), sizeof(SinhVien));
-                        if(readSinhVien.good()) {
-                            if(printMuon.getMSV() == printSinhVien.getMSV()) {
+                        if (readSinhVien.good())
+                        {
+                            if (printMuon.getMSV() == printSinhVien.getMSV())
+                            {
                                 cout << printSinhVien.getHoTen() << "\t\t";
                             }
                         }
                     }
                 }
                 readSinhVien.close();
-                //Đọc dữ liệu từ file sach.bin
-                ifstream readSach("sach.bin", ios :: binary);
-                if(!readSach) {// Kiểm tra file, nếu mở file không thành công thì báo lỗi!
+                // Đọc dữ liệu từ file sach.bin
+                ifstream readSach("sach.bin", ios ::binary);
+                if (!readSach)
+                { // Kiểm tra file, nếu mở file không thành công thì báo lỗi!
                     cout << endl;
                     cout << "\t\tLoi doc du lieu !" << endl;
                 }
-                else {
-                    while(!readSach.eof()) {
+                else
+                {
+                    while (!readSach.eof())
+                    {
                         readSach.read((char *)(&printSach), sizeof(Sach));
-                        if(readSach.good()) {
-                            if(printMuon.getMaSach() == printSach.getMaSach()) {
+                        if (readSach.good())
+                        {
+                            if (printMuon.getMaSach() == printSach.getMaSach())
+                            {
                                 cout << printSach.getMaSach() << "\t\t";
                                 cout << printSach.getTenSach() << "\t\t";
                                 cout << printSach.getTheLoai() << "\t\t";
@@ -638,7 +756,8 @@ void ToanBoSachDuocMuon() {
     readMuon.close();
 }
 
-void Thoat() {
+void Thoat()
+{
     cout << endl;
     cout << "\t\tXin chao va hen gap lai!" << endl;
     cout << endl;

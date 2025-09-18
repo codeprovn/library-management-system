@@ -4,12 +4,14 @@
 
 using namespace std;
 
-void MuonTra :: setMuon (char msv[], char Ma[]) {
+void MuonTra ::setMuon(char msv[], char Ma[])
+{
     strcpy(MSV, msv);
     strcpy(MaSach, Ma);
 }
 
-void MuonTra :: setTra (char msv[], char Ma[]) {
+void MuonTra ::setTra(char msv[], char Ma[])
+{
     strcpy(MSV, msv);
     strcpy(MaSach, Ma);
 }
