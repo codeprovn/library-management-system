@@ -1,10 +1,10 @@
 //  Created by Lê Anh Đức.
 //  Copyright © 2020 Lê Anh Đức. All rights reserved.
 #include <iostream>
-#include "sinhvien.h"
-#include "muontra.h"
-#include "sach.h"
-#include "menu.h"
+#include "../include/sinhvien.h"
+#include "../include/muontra.h"
+#include "../include/sach.h"
+#include "../include/menu.h"
 
 using namespace std;
 

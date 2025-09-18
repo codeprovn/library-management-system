@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "sach.h"
+#include "../include/sach.h"
 using namespace std;
 
 void Sach ::setSach(char Ma[], char Ten[], char Loai[], char TG[], int NXB)

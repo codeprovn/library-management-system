@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "sinhvien.h"
+#include "../include/sinhvien.h"
 using namespace std;
 
 void SinhVien ::setSinhVien(char msv[], char hoten[], char nganhhoc[])
