@@ -62,7 +62,7 @@ int main()
         {
             cout << endl;
             cout << "=========================" << endl;
-            cout << "=> Nhan Enter de tro ve !";
+            cout << "=> Nhan Enter de tro ve!";
             cin.ignore();
             cin.get();
             system("clear");
