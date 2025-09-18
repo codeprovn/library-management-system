@@ -1,10 +1,10 @@
 //  Created by Lê Anh Đức.
 //  Copyright © 2020 Lê Anh Đức. All rights reserved.
 #include <iostream>
-#include "sinhvien.h"
-#include "muontra.h"
-#include "sach.h"
-#include "menu.h"
+#include "../include/sinhvien.h"
+#include "../include/muontra.h"
+#include "../include/sach.h"
+#include "../include/menu.h"
 
 using namespace std;
 
@@ -62,7 +62,7 @@ int main()
         {
             cout << endl;
             cout << "=========================" << endl;
-            cout << "=> Nhan Enter de tro ve !";
+            cout << "=> Nhan Enter de tro ve!";
             cin.ignore();
             cin.get();
             system("clear");

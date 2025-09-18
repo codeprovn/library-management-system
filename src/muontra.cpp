@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "muontra.h"
+#include "../include/muontra.h"
 
 using namespace std;
 
