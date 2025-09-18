@@ -43,7 +43,9 @@ g++ --version
 g++ src/main.cpp src/menu.cpp src/muontra.cpp src/sach.cpp src/sinhvien.cpp -Iinclude -o library.exe
 ```
 
-> Sử dụng tham số `-Iinclude` để trình biên dịch tìm file header trong thư mục `include`.
+> **Lưu ý:**  
+> Các file mã nguồn đã được sửa để include header theo đường dẫn tương đối (ví dụ: `#include "../include/sach.h"`).  
+> Vì vậy, bạn **có thể bỏ qua** tham số `-Iinclude` khi biên dịch. Chương trình vẫn chạy bình thường nếu các file header nằm đúng vị trí như cấu trúc dự án.
 
 -   Sau khi biên dịch thành công, bạn sẽ có file thực thi `library.exe` ở thư mục gốc dự án.
 

@@ -1,30 +1,53 @@
 # Hướng dẫn đóng góp cho Library Management System
 
-Chúng tôi hoan nghênh mọi đóng góp để cải thiện chất lượng và mở rộng chức năng của dự án!
+Chúng tôi hoan nghênh mọi đóng góp để cải thiện chất lượng và mở rộng chức năng cho dự án!
 
-## Cách đóng góp
+## Quy trình đóng góp
 
-1. **Fork repository**  
-   Nhấn nút "Fork" phía trên để tạo bản sao dự án về tài khoản GitHub của bạn.
+### 1. Fork repository về tài khoản GitHub cá nhân
 
-2. **Tạo branch mới**  
-   Trên bản sao vừa fork, tạo branch mới cho tính năng/sửa lỗi bạn muốn phát triển.
+Nhấn nút **Fork** phía trên cùng của trang dự án để tạo một bản sao về tài khoản của bạn.
 
-3. **Commit thay đổi**  
-   Commit các thay đổi kèm mô tả rõ ràng.
+### 2. Clone repository vừa fork về máy
 
-4. **Tạo pull request**  
-   Gửi pull request từ branch của bạn về repository chính. Mô tả chi tiết thay đổi trong phần PR.
+```bash
+git clone https://github.com/<tài khoản của bạn>/library-management-system.git
+cd library-management-system
+```
 
-5. **Phản hồi & hoàn thiện**  
-   Chúng tôi sẽ review, phản hồi và hợp nhất khi đạt yêu cầu.
+### 3. Tạo branch mới cho tính năng/sửa lỗi
+
+```bash
+git checkout -b ten-tinh-nang-hoac-sua-loi
+```
+
+### 4. Thực hiện chỉnh sửa, commit thay đổi
+
+```bash
+git add .
+git commit -m "Mô tả ngắn gọn về thay đổi"
+```
+
+### 5. Đẩy branch lên GitHub của bạn
+
+```bash
+git push origin ten-tinh-nang-hoac-sua-loi
+```
+
+### 6. Tạo Pull Request về repository gốc
+
+-   Truy cập repository gốc: [codeprovn/library-management-system](https://github.com/codeprovn/library-management-system)
+-   Nhấn **Compare & pull request**
+-   Điền mô tả chi tiết cho Pull Request, giải thích rõ về các thay đổi/sửa lỗi/tính năng mới.
+
+---
 
 ## Quy tắc đóng góp
 
 -   Sử dụng ngôn ngữ rõ ràng, lịch sự.
 -   Tuân thủ cấu trúc thư mục của dự án.
 -   Đảm bảo code đã được kiểm thử trước khi gửi PR.
--   Thảo luận qua Issues trên GitHub nếu có ý tưởng lớn hoặc cần trao đổi thêm.
+-   Nếu có ý tưởng lớn, vui lòng thảo luận trước qua Issues.
 
 ## Liên hệ
 
